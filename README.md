@@ -65,3 +65,47 @@ root      27335      1  0 23:16 ?        00:00:03 mongodb-linux-x86_64-rhel62-3.
 root      27397   3723  0 23:26 pts/0    00:00:00 grep mongo
 ```
 **`cd mongodb-linux-x86_64-rhel62-3.4.3/`** //进入mongodb-linux-x86_64-rhel62-3.4.3
+
+
+**`bin/mongo`** //访问 MongoDB 服务器
+
+```
+MongoDB shell version v3.4.3
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.4.3
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	http://docs.mongodb.org/
+Questions? Try the support group
+	http://groups.google.com/group/mongodb-user
+Server has startup warnings: 
+2021-01-04T23:16:48.545+0800 I STORAGE  [initandlisten] 
+2021-01-04T23:16:48.545+0800 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2021-01-04T23:16:48.545+0800 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2021-01-04T23:16:48.946+0800 I CONTROL  [initandlisten] 
+2021-01-04T23:16:48.946+0800 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2021-01-04T23:16:48.946+0800 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2021-01-04T23:16:48.946+0800 I CONTROL  [initandlisten] ** WARNING: You are running this process as the root user, which is not recommended.
+2021-01-04T23:16:48.946+0800 I CONTROL  [initandlisten] 
+2021-01-04T23:16:48.947+0800 I CONTROL  [initandlisten] 
+2021-01-04T23:16:48.947+0800 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2021-01-04T23:16:48.947+0800 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2021-01-04T23:16:48.947+0800 I CONTROL  [initandlisten] 
+2021-01-04T23:16:48.947+0800 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
+2021-01-04T23:16:48.947+0800 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2021-01-04T23:16:48.947+0800 I CONTROL  [initandlisten] 
+> 
+```
+
+**`cd /usr/local/mongodb`**
+
+**`mongodb-linux-x86_64-rhel62-3.4.3/bin/mongod -shutdown -config  ./data/mongodb.conf`** //停止 MongoDB 服务器
+```
+killing process with pid: 27335
+```
+
+`ps -ef | grep mongo`显示mongo进程，证明已结束进程
+```
+root      27453   3723  0 23:58 pts/0    00:00:00 grep mongo
+```
