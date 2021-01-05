@@ -114,6 +114,8 @@ killing process with pid: 27335
 root      27453   3723  0 23:58 pts/0    00:00:00 grep mongo
 ```
 
+## 1.3 Redis（单节点）环境配置：
+
 `wget http://download.redis.io/releases/redis-4.0.2.tar.gz` //通过 WGET 下载 REDIS 的源码
 
 `tar -xf redis-4.0.2.tar.gz -C ~/` //解压
@@ -206,5 +208,78 @@ OK
 
 `[root@localhost redis]# redis-cli shutdown` // 停止 Redis 服务器
 
+## 1.4 ElasticSearch（单节点）环境配置：
+
+`wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.2.tar.gz`
+
+```
+[root@localhost 桌面]# ls
+elasticsearch-5.6.2.tar.gz  redis  redis-4.0.2  tree-1.8.0
+[root@localhost 桌面]# tar -xf elasticsearch-5.6.2.tar.gz 
+[root@localhost 桌面]# ls
+elasticsearch-5.6.2  elasticsearch-5.6.2.tar.gz  redis  redis-4.0.2  tree-1.8.0
+[root@localhost 桌面]# mv elasticsearch-5.6.2 elasticsearch
+[root@localhost 桌面]# ls
+elasticsearch  elasticsearch-5.6.2.tar.gz  redis  redis-4.0.2  tree-1.8.0
+[root@localhost 桌面]# cd elasticsearch/
+[root@localhost elasticsearch]# ls
+benchmarks             core               LICENSE.txt  README.textile
+bootstrap.memory_lock  dev-tools          migrate.sh   rest-api-spec
+build.gradle           distribution       modules      settings.gradle
+buildSrc               docs               NOTICE.txt   test
+client                 GRADLE.CHEATSHEET  plugins      TESTING.asciidoc
+CONTRIBUTING.md        gradle.properties  qa           Vagrantfile
+[root@localhost elasticsearch]# 
+```
+
+**`vim /etc/security/limits.conf`** // 修改文件数配置，在文件末尾添加如下配置
+```
+\* soft nofile 65536 
+\* hard nofile 131072 
+\* soft nproc 2048 
+\* hard nproc 4096 
+ // 修改* soft nproc 1024 为 * soft nproc 2048
+```
+
+**`vim /etc/security/limits.d/90-nproc.conf`** 
+\* soft nproc 2048 #将该条目修改成 2048
+
+**`vim /etc/sysctl.conf`**
+// 在文件末尾添加：vm.max_map_count=655360
+
+**`sysctl -p`** //配置linux的参数，配置完成后，执行**sudo sysctl -p**，使配置生效
+```
+[root@localhost elasticsearch]#  sysctl -p
+net.ipv4.ip_forward = 0
+net.ipv4.conf.default.rp_filter = 1
+net.ipv4.conf.default.accept_source_route = 0
+kernel.sysrq = 0
+kernel.core_uses_pid = 1
+net.ipv4.tcp_syncookies = 1
+kernel.msgmnb = 65536
+kernel.msgmax = 65536
+kernel.shmmax = 68719476736
+kernel.shmall = 4294967296
+vm.max_map_count = 655360
+```
+`tar -xf  `/ 解压 ElasticSearch 到安装目录
+
+`cd elasticsearch/` // 进入 ElasticSearch 安装目录
+
+`mkdir elasticsearch/data/ ` //创建 ElasticSearch 数据文件夹 data 
+
+`mkdir elasticsearch-5.6.2/logs/` // 创建 ElasticSearch 日志文件夹 logs 
+```
+cluster.name: es-cluster #设置集群的名称
+node.name: es-node #修改当前节点的名称
+path.data: /root/桌面/elasticsearch/elasticsearch/data #修改
+数据路径
+path.logs: /root/桌面/elasticsearch/elasticsearch/logs #修改
+日志路径
+bootstrap.memory_lock: false #设置 ES 节点允许内存交换
+bootstrap.system_call_filter: false #禁用系统调用过滤器
+network.host: localhost #设置当前主机名称
+discovery.zen.ping.unicast.hosts: ["localhost"] #设置集群的主机列表,若此时有多个集群应在此列出，此时仅为单节点故只列本机
+```
 
 
