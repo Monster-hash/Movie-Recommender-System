@@ -138,11 +138,73 @@ cd ./redis-4.0.2
 `?daemonize //查找daemonize`
 
 ```
-**daemonize yes** #136 行 #是否以后台 daemon 方式运行，默认不是后台运行
-**bind 0.0.0.0** #69 行 #绑定主机 IP，默认值为 127.0.0.1，我们是跨机器运行，所以需要更改，0.0.0.0即所有网卡都能提供redis服务
+daemonize yes #136 行 #是否以后台 daemon 方式运行，默认不是后台运行
+
+bind 0.0.0.0 #69 行 #绑定主机 IP，默认值为 127.0.0.1，我们是跨机器运行，所以需要更改，0.0.0.0即所有网卡都能提供redis服务
+
 logfile "/root/桌面/redis/redis.log" #171 行 #定义 log 文件位置，模式 log
-信息定向到 stdout，输出到/dev/null（可选）
+
 dir "/root/桌面/redis/" #本地数据库存放路径，默认为./，编译安装默认存在在/usr/local/bin 下（可选）
 ```
+
+`cp ./redis-4.0.2/redis.conf ./redis`copy到redis目录下
+
+```
+[root@localhost 桌面]# redis-server ./redis/redis.conf  // 启动 Redis 服务器
+
+[root@localhost 桌面]# ls
+
+redis  redis-4.0.2  tree-1.8.0
+
+[root@localhost 桌面]# cd redis
+
+[root@localhost redis]# ls
+
+redis.conf  redis.log
+
+[root@localhost redis]# cat redis.log
+
+32783:C 05 Jan 15:08:11.961 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+32783:C 05 Jan 15:08:11.961 # Redis version=4.0.2, bits=64, commit=00000000, modified=0, pid=32783, just started
+32783:C 05 Jan 15:08:11.961 # Configuration loaded
+32784:M 05 Jan 15:08:11.962 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 4.0.2 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 32784
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+32784:M 05 Jan 15:08:11.963 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+32784:M 05 Jan 15:08:11.963 # Server initialized
+32784:M 05 Jan 15:08:11.963 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+32784:M 05 Jan 15:08:11.963 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+32784:M 05 Jan 15:08:11.963 * Ready to accept connections
+```
+           
+`[root@localhost redis]# redis-cli` //连接 Redis 服务器
+```
+
+127.0.0.1:6379> set a b `//测试
+OK
+127.0.0.1:6379> get a
+"b"
+127.0.0.1:6379> exit//退出
+
+```
+
+`[root@localhost redis]# redis-cli shutdown` // 停止 Redis 服务器
+
 
 
