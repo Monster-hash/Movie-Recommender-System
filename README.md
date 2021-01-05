@@ -8,8 +8,12 @@
 
 # 一：系统环境搭建
 
+注：以下操作基于root用户，非root用户部分操作前需加sudo指令
+
 ## 1.1 工具环境：Cent OS 6.9 
    `centos69-64\CentOS-6.9-x86_64-bin-DVD1.iso`
+
+`yum -y install gcc`安装gcc
 
 ## 1.2 MongoDB环境配置：
 **`wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel62-3.4.3.tgz`**
@@ -109,3 +113,36 @@ killing process with pid: 27335
 ```
 root      27453   3723  0 23:58 pts/0    00:00:00 grep mongo
 ```
+
+`wget http://download.redis.io/releases/redis-4.0.2.tar.gz` //通过 WGET 下载 REDIS 的源码
+
+`tar -xf redis-4.0.2.tar.gz -C ~/` //解压
+
+`cd redis-4.0.2/`进入Redis源码
+
+`make MALLOC=libc`// 编译源代码
+
+` make install`// 编译安装
+
+`ll /usr/local/bin/redis-*`查看默认安装位置
+
+```
+cd ../
+mkdir redis
+cd ./redis-4.0.2
+```
+
+`vim ./redis.conf`// 修改配置文件内容
+
+`set nu //显示行号`
+`?daemonize //查找daemonize`
+
+```
+**daemonize yes** #136 行 #是否以后台 daemon 方式运行，默认不是后台运行
+**bind 0.0.0.0** #69 行 #绑定主机 IP，默认值为 127.0.0.1，我们是跨机器运行，所以需要更改，0.0.0.0即所有网卡都能提供redis服务
+logfile "/root/桌面/redis/redis.log" #171 行 #定义 log 文件位置，模式 log
+信息定向到 stdout，输出到/dev/null（可选）
+dir "/root/桌面/redis/" #本地数据库存放路径，默认为./，编译安装默认存在在/usr/local/bin 下（可选）
+```
+
+
