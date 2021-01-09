@@ -269,13 +269,12 @@ vm.max_map_count = 655360
 `mkdir elasticsearch/data/ ` //创建 ElasticSearch 数据文件夹 data 
 
 `mkdir elasticsearch-5.6.2/logs/` // 创建 ElasticSearch 日志文件夹 logs 
+
 ```
 cluster.name: es-cluster #设置集群的名称
 node.name: es-node #修改当前节点的名称
-path.data: /root/桌面/elasticsearch/elasticsearch/data #修改
-数据路径
-path.logs: /root/桌面/elasticsearch/elasticsearch/logs #修改
-日志路径
+path.data: /root/桌面/elasticsearch/elasticsearch/data #修改数据路径
+path.logs: /root/桌面/elasticsearch/elasticsearch/logs #修改日志路径
 bootstrap.memory_lock: false #设置 ES 节点允许内存交换
 bootstrap.system_call_filter: false #禁用系统调用过滤器
 network.host: localhost #设置当前主机名称
