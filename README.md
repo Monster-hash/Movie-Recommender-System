@@ -213,6 +213,7 @@ OK
 `wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.2.tar.gz`
 
 ```
+效果如下：
 [root@localhost 桌面]# ls
 elasticsearch-5.6.2.tar.gz  redis  redis-4.0.2  tree-1.8.0
 [root@localhost 桌面]# tar -xf elasticsearch-5.6.2.tar.gz 
@@ -270,15 +271,24 @@ vm.max_map_count = 655360
 
 `mkdir elasticsearch-5.6.2/logs/` // 创建 ElasticSearch 日志文件夹 logs 
 
+新建用户es，因为elasticsearch不能在root用户下进行
+
 ```
 cluster.name: es-cluster #设置集群的名称
 node.name: es-node #修改当前节点的名称
-path.data: /root/桌面/elasticsearch/elasticsearch/data #修改数据路径
-path.logs: /root/桌面/elasticsearch/elasticsearch/logs #修改日志路径
+path.data: /home/es/elasticsearch/elasticsearch/data #修改数据路径
+path.logs: /home/es/elasticsearch/elasticsearch/logs #修改日志路径
 bootstrap.memory_lock: false #设置 ES 节点允许内存交换
 bootstrap.system_call_filter: false #禁用系统调用过滤器
 network.host: localhost #设置当前主机名称
 discovery.zen.ping.unicast.hosts: ["localhost"] #设置集群的主机列表,若此时有多个集群应在此列出，此时仅为单节点故只列本机
 ```
+
+虚拟机设置开启主机访问
+
+- 在虚拟机网络中设置**虚拟网络编辑器**把主机IP地址加入vment8的NAT设置中
+
+- 此时便可在主机中的**elasticsearch head**中查看集群
+
 
 
